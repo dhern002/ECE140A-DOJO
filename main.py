@@ -1,5 +1,6 @@
 import multipart
 from fastapi import FastAPI, Form
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 
@@ -9,14 +10,16 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
-@app.get("/")
-async def root():
-    return HTMLResponse("index.html")
+@app.get("/", response_class=HTMLResponse)
+def get_root_html() -> HTMLResponse:
+    with open("index.html") as html:
+        return HTMLResponse(content=html.read())
 
 
-@app.get("/basics")
-async def basics():
-    return HTMLResponse("basics.html")
+@app.get("/basics", response_class=HTMLResponse)
+def get_basics_html() -> HTMLResponse:
+    with open("basics.html") as html:
+        return HTMLResponse(content=html.read())
 
 
 # add the remaining endpoints here
