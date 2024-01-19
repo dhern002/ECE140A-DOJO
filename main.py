@@ -12,13 +12,13 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 def get_root_html() -> HTMLResponse:
-    with open("index.html") as html:
+    with open("templates/index.html") as html:
         return HTMLResponse(content=html.read())
 
 
 @app.get("/basics", response_class=HTMLResponse)
 def get_basics_html() -> HTMLResponse:
-    with open("basics.html") as html:
+    with open("templates/basics.html") as html:
         return HTMLResponse(content=html.read())
 
 
