@@ -1,7 +1,7 @@
 # DOJO
 
 ## Javascript:
-Wouldn't it be nice if we could add functionality to our website? Well we can! We will be using javascript to add 
+Wouldn't it be nice if we could add interactivity to our website? Well we can! We will be using javascript to add 
 interactivity to our website. We will be using javascript to make requests to our backend dynamically update our website.
 
 ### Fetch:

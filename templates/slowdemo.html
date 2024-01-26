@@ -39,6 +39,9 @@
     </style>
 </head>
 <body>
+<div id="timezone">
+
+</div>
 <button id="asyncBtn">Async Call</button>
 <button id="nonAsyncBtn">Non-Async Call</button>
 <div id="response"></div>
@@ -79,6 +82,19 @@
         blocking = false;
         responseDiv.style.backgroundColor = 'red';
     });
+    let timezones;
+    let timezone = document.querySelector('#timezone');
+
+    fetch('/timezones')
+        .then(response => response.json())
+        .then(data => {
+            timezones = data.timezone;
+        });
+    timezone.innerText = timezones;
+    function updateTime() {
+        timezone.innerText = timezones.toString();
+    }
+    // setInterval(updateTime, 100);
 
     let clock = document.querySelector('#clock');
     let i = 0;
