@@ -11,11 +11,17 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
+
+
 @app.get("/", response_class=HTMLResponse)
 def get_root_html(request: Request) -> HTMLResponse:
+    """
+    Hmmm, what does this do? What is a template response? How can it help us?
+    Renders the index.html template, with the request object passed in.
+    :param request:
+    :return:
+    """
     return templates.TemplateResponse('index.html', {'request': request})
-    # with open("templates/index.html") as html:
-    #     return HTMLResponse(content=html.read())
 
 
 @app.get("/basics", response_class=HTMLResponse)
@@ -24,7 +30,38 @@ def get_basics_html() -> HTMLResponse:
         return HTMLResponse(content=html.read())
 
 
-# add the remaining endpoints here
+@app.get("/css", response_class=HTMLResponse)
+def get_css_html() -> HTMLResponse:
+    with open("templates/css.html") as html:
+        return HTMLResponse(content=html.read())
+
+
+@app.get("/fast_api", response_class=HTMLResponse)
+def get_fast_api_html() -> HTMLResponse:
+    with open("templates/fast_api.html") as html:
+        return HTMLResponse(content=html.read())
+
+
+@app.get("/view_notes", response_class=HTMLResponse)
+def get_view_notes_html() -> HTMLResponse:
+    with open("templates/notes.html") as html:
+        return HTMLResponse(content=html.read())
+
+
+@app.get("/web_development", response_class=HTMLResponse)
+def get_web_development_html() -> HTMLResponse:
+    with open("templates/web_development.html") as html:
+        return HTMLResponse(content=html.read())
+
+
+@app.get("/web_serving", response_class=HTMLResponse)
+def get_web_serving_html() -> HTMLResponse:
+    with open("templates/web_serving.html") as html:
+        return HTMLResponse(content=html.read())
+
+
+
+
 
 @app.get("/notes")
 async def read_notes():
