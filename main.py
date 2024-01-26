@@ -65,7 +65,7 @@ async def get_demo():
 
 @app.get("/slowroute")
 async def slow_route():
-    await asyncio.sleep(5)  # Artificial delay
+    await asyncio.sleep(3)  # Artificial delay
     return {"message": "Delayed response received"}
 
 
