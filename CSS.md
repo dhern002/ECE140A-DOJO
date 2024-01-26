@@ -45,3 +45,13 @@ The last main way CSS can be used in a web-page is inline through the ```style``
 </body>
 ```
 Notice that when inline styling is used, the selector is omitted, and the rule is directly written there. Inline style is useful when trying small tweaks to perfect your layout.
+***
+The most important part, how do I center items in a webpage? One of the easiest ways to do so is the following.
+```css
+body {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+```
