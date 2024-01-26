@@ -52,23 +52,27 @@
     document.getElementById('asyncBtn').addEventListener('click', async function() {
         const responseDiv = document.getElementById('response');
         responseDiv.innerText = 'Waiting for response...';
+        blocking = true;
         fetch('http://localhost:8000/slowroute')
             .then(response => response.json())
             .then(data => {
                 responseDiv.innerText = data.message;
                 responseDiv.style.backgroundColor = 'green';
             });
+        blocking = false;
         responseDiv.style.backgroundColor = 'red';
     });
     document.getElementById('nonAsyncBtn').addEventListener('click', async function() {
         const responseDiv = document.getElementById('response');
         responseDiv.innerText = 'Waiting for response...';
+        blocking = true;
         await fetch('http://localhost:8000/slowroute')
             .then(response => response.json())
             .then(data => {
                 responseDiv.innerText = data.message;
                 responseDiv.style.backgroundColor = 'green';
             });
+        blocking = false;
         responseDiv.style.backgroundColor = 'red';
     });
 
@@ -88,8 +92,12 @@
     let theY=5;
     let theDeltaX=2;
     let theDeltaY=1;
+    let blocking = false;
 
     function updateX() {
+        if (blocking) {
+        return;
+      }
       theX+=theDeltaX;
       theImg.style.left=`${theX}px`;
       if(theX<0 || theX>thePuppyContainer.offsetWidth-theImg.offsetWidth) {
@@ -98,6 +106,9 @@
     }
 
     function updateY() {
+      if (blocking) {
+        return;
+      }
       theY+=theDeltaY;
       theImg.style.top=`${theY}px`;
       if(theY<0 || theY>thePuppyContainer.offsetHeight-theImg.offsetHeight) {
