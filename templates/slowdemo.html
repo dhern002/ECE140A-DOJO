@@ -19,7 +19,7 @@
             flex-wrap: wrap;
             align-items: center;
         }
-        .thePuppyContainer {
+        #thePuppyContainer {
           background:#222;
           margin:0;
           min-height:80vh;
@@ -42,7 +42,7 @@
 <button id="asyncBtn">Async Call</button>
 <button id="nonAsyncBtn">Non-Async Call</button>
 <div id="response"></div>
-<div class="thePuppyContainer">
+<div id="thePuppyContainer">
     <img class="" src="https://source.unsplash.com/random/300x200?puppy" alt=""/>
 </div>
 
@@ -83,7 +83,7 @@
 
     let theBody=document.querySelector('body');
     let theImg=document.querySelector('img');
-    let thePuppyContainer=document.querySelector('.thePuppyContainer')[0];
+    let thePuppyContainer=document.querySelector('#thePuppyContainer');
     let theX=5;
     let theY=5;
     let theDeltaX=2;
