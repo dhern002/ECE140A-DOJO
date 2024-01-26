@@ -81,5 +81,11 @@ def getStocks():
 async def get_timezone():
     await asyncio.sleep(1);
     return {"timezone": ['CST', 'PST']}
+
+@app.get("/css")
+async def get_css():
+    with open("templates/css.html") as html:
+        return HTMLResponse(content=html.read())
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
