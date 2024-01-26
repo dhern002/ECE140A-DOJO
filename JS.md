@@ -74,3 +74,17 @@ document.addEventListener("DOMContentLoaded", () => {
 ```
 
 ### DOM Manipulation:
+DOM manipulation is a way to change the html of a page. You can change the html of a page by using javascript. You can
+change the text of an element, you can change the style of an element, you can add elements to the page, you can remove
+elements from the page. You can do all of this by using javascript. 
+```javascript
+const element = document.getElementById("element") // This gets the element from the html
+element.innerText = "Hello World" // This changes the text of the element
+element.style.color = "red" // This changes the color of the element
+element.style.backgroundColor = "blue" // This changes the background color of the element
+element.style.fontSize = "20px" // This changes the font size of the element
+element.style.border = "1px solid black" // This adds a border to the element
+```
+
+You should just make sure element is not null before you try to access it. This is because if the element is not found,
+it will return null. One reason behin d this might be that the element is not loaded yet.
