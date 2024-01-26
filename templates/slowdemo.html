@@ -19,12 +19,34 @@
             flex-wrap: wrap;
             align-items: center;
         }
+        .thePuppyContainer {
+          background:#222;
+          margin:0;
+          min-height:80vh;
+            min-width:80vw;
+        }
+
+        img {
+
+            position:relative;
+            top: 10px;
+            left:10px;
+            width:50vmin;
+            aspect-ratio:3/2;
+            border:2vmin solid #111;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
 <button id="asyncBtn">Async Call</button>
 <button id="nonAsyncBtn">Non-Async Call</button>
 <div id="response"></div>
+<div class="thePuppyContainer">
+    <img class="" src="https://source.unsplash.com/random/300x200?puppy" alt=""/>
+</div>
+
+
 <div id="clock"></div>
 <script>
     document.getElementById('asyncBtn').addEventListener('click', async function() {
@@ -58,6 +80,35 @@
         i += 1;
     }
 
+
+    let theBody=document.querySelector('body');
+    let theImg=document.querySelector('img');
+    let thePuppyContainer=document.querySelector('.thePuppyContainer')[0];
+    let theX=5;
+    let theY=5;
+    let theDeltaX=2;
+    let theDeltaY=1;
+
+    function updateX() {
+      theX+=theDeltaX;
+      theImg.style.left=`${theX}px`;
+      if(theX<0 || theX>thePuppyContainer.offsetWidth-theImg.offsetWidth) {
+        theDeltaX *= -1;
+      }
+    }
+
+    function updateY() {
+      theY+=theDeltaY;
+      theImg.style.top=`${theY}px`;
+      if(theY<0 || theY>thePuppyContainer.offsetHeight-theImg.offsetHeight) {
+        theDeltaY *= -1;
+      }
+    }
+
+    setInterval(function() {
+      updateX();
+      updateY();
+    },25);
 </script>
 </body>
 </html>

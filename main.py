@@ -56,10 +56,13 @@ async def write_notes(note: str = Form(...)):
 async def say_hello(name: str):
     return {"message": f"Hello {name}"}
 
+
 @app.get("/slowdemo")
 async def get_demo():
     with open("templates/slowdemo.html") as html:
         return HTMLResponse(content=html.read())
+
+
 @app.get("/slowroute")
 async def slow_route():
     await asyncio.sleep(5)  # Artificial delay
