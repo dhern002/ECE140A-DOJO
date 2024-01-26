@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Async vs Non-Async Demo</title>
+    <style>
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+<button id="asyncBtn">Async Call</button>
+<button id="nonAsyncBtn">Non-Async Call</button>
+<div id="response"></div>
+<script>
+    document.getElementById('asyncBtn').addEventListener('click', async function() {
+        const responseDiv = document.getElementById('response');
+        fetch('http://localhost:8000/slowroute')
+            .then(response => response.json())
+            .then(data => {
+                responseDiv.innerText = data.message;
+            });
+    });
+    document.getElementById('nonAsyncBtn').addEventListener('click', function() {
+        const responseDiv = document.getElementById('response');
+        responseDiv.innerText = 'Waiting for response...';
+        fetch('http://localhost:8000/slowroute')
+            .then(response => response.json())
+            .then(data => {
+                alert("Actual response received!");
+                responseDiv.innerText = data.message;
+            });
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+

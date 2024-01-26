@@ -3,6 +3,7 @@ from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
+import asyncio
 
 
 # Create the FastAPI instance
@@ -54,6 +55,15 @@ async def write_notes(note: str = Form(...)):
 @app.get("/hello/{name}")
 async def say_hello(name: str):
     return {"message": f"Hello {name}"}
+
+@app.get("/slowdemo")
+async def get_demo():
+    with open("templates/slowdemo.html") as html:
+        return HTMLResponse(content=html.read())
+@app.get("/slowroute")
+async def slow_route():
+    await asyncio.sleep(5)  # Artificial delay
+    return {"message": "Delayed response received"}
 
 
 if __name__ == "__main__":
