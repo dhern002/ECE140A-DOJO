@@ -68,6 +68,15 @@ async def slow_route():
     await asyncio.sleep(3)  # Artificial delay
     return {"message": "Delayed response received"}
 
+
+def getStocks():
+
+    html = """
+    <html>
+        <head>
+            <title>Stocks</title> 
+            </head>"""
+    return {"stocks": ['AAPL', 'GOOG', 'TSLA']}
 @app.get("/timezones")
 async def get_timezone():
     await asyncio.sleep(1);
