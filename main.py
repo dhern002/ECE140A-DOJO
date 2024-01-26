@@ -68,6 +68,9 @@ async def slow_route():
     await asyncio.sleep(3)  # Artificial delay
     return {"message": "Delayed response received"}
 
-
+@app.get("/timezones")
+async def get_timezone():
+    await asyncio.sleep(1);
+    return {"timezone": ['CST', 'PST']}
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
