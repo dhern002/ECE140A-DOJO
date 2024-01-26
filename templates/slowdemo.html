@@ -55,8 +55,11 @@
     document.getElementById('asyncBtn').addEventListener('click', async function() {
         const responseDiv = document.getElementById('response');
         responseDiv.innerText = 'Waiting for response...';
+
+        // this is for the demo purposes see how we are blocking before we call fetch?
+        // without await blocking goes false immediately
         blocking = true;
-        fetch('http://localhost:8000/slowroute')
+        fetch('/slowroute')
             .then(response => response.json())
             .then(data => {
                 responseDiv.innerText = data.message;
@@ -69,7 +72,8 @@
         const responseDiv = document.getElementById('response');
         responseDiv.innerText = 'Waiting for response...';
         blocking = true;
-        await fetch('http://localhost:8000/slowroute')
+        // with await blocking goes false after we get the response
+        await fetch('/slowroute')
             .then(response => response.json())
             .then(data => {
                 responseDiv.innerText = data.message;
@@ -111,25 +115,28 @@
     let blocking = false;
 
     function updateX() {
+        // what's happening here? this is not usual but just a demonstration of how blocking works
+        // when not async everything belo
         if (blocking) {
-        return;
-      }
-      theX+=theDeltaX;
-      theImg.style.left=`${theX}px`;
-      if(theX<0 || theX>thePuppyContainer.offsetWidth-theImg.offsetWidth) {
-        theDeltaX *= -1;
-      }
+            return;
+        }
+        theX+=theDeltaX;
+        theImg.style.left=`${theX}px`;
+        if(theX<0 || theX>thePuppyContainer.offsetWidth-theImg.offsetWidth) {
+            theDeltaX *= -1;
+        }
     }
 
     function updateY() {
-      if (blocking) {
-        return;
-      }
-      theY+=theDeltaY;
-      theImg.style.top=`${theY}px`;
-      if(theY<0 || theY>thePuppyContainer.offsetHeight-theImg.offsetHeight) {
-        theDeltaY *= -1;
-      }
+         // whats happening here?
+        if (blocking) {
+            return;
+        }
+        theY+=theDeltaY;
+        theImg.style.top=`${theY}px`;
+        if(theY<0 || theY>thePuppyContainer.offsetHeight-theImg.offsetHeight) {
+            theDeltaY *= -1;
+        }
     }
 
     setInterval(function() {
