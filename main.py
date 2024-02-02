@@ -78,7 +78,7 @@ async def update_item(request: Request, id: int = Form(...), name: str = Form(No
         conn.close()
 
         if cursor.rowcount == 0:
-            raise HTTPException(status_code=404, detail="Item not found")
+            return templates.TemplateResponse("error.html", {"request": request, "message": "no item found with that id"})
 
         return await get_items(request)
     except mysql.connector.Error as err:

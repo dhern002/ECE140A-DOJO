@@ -10,7 +10,7 @@
     {% if items %}
     <ul>
         {% for item in items %}
-        <li>{{ item.name }}: {{ item.description }} - ${{ item.price }}</li>
+        <li>{{item.id}}) {{ item.name }}: {{ item.description }} - ${{ item.price }}</li>
         {% endfor %}
     </ul>
     {% else %}
