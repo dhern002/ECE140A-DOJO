@@ -25,39 +25,32 @@ def get_root_html(request: Request) -> HTMLResponse:
 
 
 @app.get("/basics", response_class=HTMLResponse)
-def get_basics_html() -> HTMLResponse:
-    with open("templates/basics.html") as html:
-        return HTMLResponse(content=html.read())
+def get_basics_html(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse('basics.html', {'request': request})
 
 
 @app.get("/css", response_class=HTMLResponse)
-def get_css_html() -> HTMLResponse:
-    with open("templates/css.html") as html:
-        return HTMLResponse(content=html.read())
+def get_css_html(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse('css.html', {'request': request})
 
 
 @app.get("/fast_api", response_class=HTMLResponse)
-def get_fast_api_html() -> HTMLResponse:
-    with open("templates/fast_api.html") as html:
-        return HTMLResponse(content=html.read())
+def get_fast_api_html(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse('fast_api.html', {'request': request})
 
 
 @app.get("/view_notes", response_class=HTMLResponse)
-def get_view_notes_html() -> HTMLResponse:
-    with open("templates/notes.html") as html:
-        return HTMLResponse(content=html.read())
+def get_view_notes_html(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse('notes.html', {'request': request})
 
 
 @app.get("/web_development", response_class=HTMLResponse)
-def get_web_development_html() -> HTMLResponse:
-    with open("templates/web_development.html") as html:
-        return HTMLResponse(content=html.read())
-
+def get_web_development_html(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse('web_development.html', {'request': request})
 
 @app.get("/web_serving", response_class=HTMLResponse)
-def get_web_serving_html() -> HTMLResponse:
-    with open("templates/web_serving.html") as html:
-        return HTMLResponse(content=html.read())
+def get_web_serving_html(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse('web_serving.html', {'request': request})
 
 
 
@@ -106,24 +99,11 @@ async def slow_route():
     await asyncio.sleep(3)  # Artificial delay
     return {"message": "Delayed response received"}
 
-
-def getStocks():
-
-    html = """
-    <html>
-        <head>
-            <title>Stocks</title> 
-            </head>"""
-    return {"stocks": ['AAPL', 'GOOG', 'TSLA']}
 @app.get("/timezones")
 async def get_timezone():
     await asyncio.sleep(1);
     return {"timezone": ['CST', 'PST']}
 
-@app.get("/css")
-async def get_css():
-    with open("templates/css.html") as html:
-        return HTMLResponse(content=html.read())
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
