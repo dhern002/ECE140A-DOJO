@@ -6,6 +6,7 @@ import uvicorn
 import asyncio
 from fastapi.templating import Jinja2Templates
 
+
 # Create the FastAPI instance
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
