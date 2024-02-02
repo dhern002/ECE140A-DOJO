@@ -8,5 +8,92 @@
 <body>
 {% include 'navbar.html' %}
 
+<h1 id="dojo-1-">DOJO 1:</h1>
+<h2 id="env-basics-">Env Basics:</h2>
+<h3 id="git-and-github-">Git and Github:</h3>
+<h4 id="initializing-a-git-repo-">Initializing a git repo:</h4>
+<p>Do this in the root of the project directory which you want to track. When you use git clone on an existing repo, you don&#39;t need to do this.
+a git repo will be initialized automatically.</p>
+<pre><code class="lang-bash"><span class="hljs-attribute">git init</span>
+</code></pre>
+<h4 id="adding-files-to-the-staging-area-">Adding files to the staging area:</h4>
+<p>This is adding files to the staging area, not the repo itself. The staging area is where you can add files to be commited
+to the repo. Think about it as just placing some items in a box, but not sealing it or shipping it.</p>
+<pre><code class="lang-bash">git <span class="hljs-keyword">add</span><span class="bash"> &lt;file&gt;</span>
+</code></pre>
+<p>To add all files and folders in the working directory, run the below command.</p>
+<pre><code class="lang-bash">git <span class="hljs-keyword">add</span><span class="bash"> .</span>
+</code></pre>
+<h4 id="commiting-files-to-the-repo-">Commiting files to the repo:</h4>
+<p>This is commiting the files in the staging area to the repo. It is a checkpoint you create in your local git tree.
+Think about it as sealing the box that you placed items in.</p>
+<pre><code class="lang-bash"><span class="hljs-attribute">git</span> commit -m <span class="hljs-string">"commit message"</span>
+</code></pre>
+<h4 id="pushing-files-to-a-remote-repo-">Pushing files to a remote repo:</h4>
+<p>This is pushing the files in the local repo to a remote repo. This is for syncing your local repo with a remote repo.
+Generally good idea to pull before push to make sure you are incorporating remote changes. Think about it as shipping
+the box that you sealed to a remote location. </p>
+<pre><code class="lang-bash">git <span class="hljs-keyword">push</span>
+</code></pre>
+<h4 id="pulling-files-from-a-remote-repo-">Pulling files from a remote repo:</h4>
+<p>This is pulling the files from a remote repo to your local repo. This is for syncing your local repo with a remote repo.</p>
+<pre><code class="lang-bash"><span class="hljs-attribute">git pull</span>
+</code></pre>
+<h4 id="checking-the-status-of-your-local-repo-">Checking the status of your local repo:</h4>
+<p>This command is very useful for checking the status of your local repo. It will tell you what files are staged, what files
+are not tracked, and what files are modified.</p>
+<pre><code class="lang-bash"><span class="hljs-attribute">git status</span>
+</code></pre>
+<h4 id="side-note-">Side Note:</h4>
+<p>.gitignore is a file that you can create in your project directory. This file will tell git to ignore certain files or
+directories. This is useful for not tracking files that you don&#39;t want to track. For example, you don&#39;t want to track
+your virtual environment directory, any credentials or database files.</p>
+<p>We included a .gitignore file in this repo. Please add your virtual environment and the text file you created to this</p>
+<h3 id="python-">Python:</h3>
+<h4 id="creating-a-virtual-environment-">Creating a virtual environment:</h4>
+<p>This is creating a virtual environment for your project. This is a good idea because it will keep your project dependencies
+separate from your global python installation. This is also a good idea because it will allow you to easily share your
+project with others. Think about it as creating a box for your project to live in.</p>
+<p>Great News! Python 3 comes with a built in virtual environment manager. No need to install any program.
+You can create a virtual environment by running</p>
+<pre><code class="lang-bash">python3 -m venv &lt;<span class="hljs-keyword">name</span> <span class="hljs-keyword">of</span> <span class="hljs-keyword">virtual</span> environment&gt;
+</code></pre>
+<p>Once you run this command you should see a new directory in your project directory called <name of virtual environment>.
+This directory will include a bin directory which will have a python executable. This is the python executable that you
+will use for your project. You can activate the virtual environment by running the following command on Unix (MacOS, Linux):</p>
+<pre><code class="lang-bash">source &lt;<span class="hljs-built_in">name</span> <span class="hljs-keyword">of</span> virtual environment&gt;/bin/<span class="hljs-built_in">activate</span>
+</code></pre>
+<p>On Windows machines, run:</p>
+<pre><code class="lang-bash">.\&lt;<span class="hljs-built_in">name</span> <span class="hljs-keyword">of</span> virtual environment&gt;\Scripts\<span class="hljs-built_in">activate</span>
+</code></pre>
+<p>Once you run this command you should see the name of your virtual environment in parenthesis in your terminal. This means
+that you have successfully activated your virtual environment. You can deactivate your virtual environment by running the
+following command:</p>
+<pre><code class="lang-bash"><span class="hljs-attribute">deactivate</span>
+</code></pre>
+<h4 id="conda-">Conda:</h4>
+<p>Conda is a package manager for python. it has multiple flavors: most common are conda and miniconda. Conda is might be
+necessary over pip if you are installing complex packages that require a lot of dependencies.</p>
+<h5 id="anaconda-">Anaconda:</h5>
+<p>Anaconda is a full package manager for python. It comes with a lot of packages pre-installed. It is a good choice if you
+are just starting out with python and don&#39;t want to worry about installing packages. </p>
+<h5 id="miniconda-">Miniconda:</h5>
+<p>Miniconda is a minimal package manager for python. It comes with a few packages pre-installed. It is a good choice if you
+are more experienced with python and want to have more control over what packages are installed.</p>
+<h5 id="conda-commands-">Conda commands:</h5>
+<pre><code class="lang-bash">conda <span class="hljs-keyword">create</span> -n &lt;<span class="hljs-keyword">name</span> <span class="hljs-keyword">of</span> <span class="hljs-keyword">virtual</span> environment&gt; python=&lt;python <span class="hljs-keyword">version</span>&gt;
+</code></pre>
+<p>This command will create a virtual environment with the name <name of virtual environment> and the python version <python version>.</p>
+<pre><code class="lang-bash">conda <span class="hljs-built_in">activate</span> &lt;<span class="hljs-built_in">name</span> <span class="hljs-keyword">of</span> virtual environment&gt;
+</code></pre>
+<p>This command will activate the virtual environment with the name <name of virtual environment>.</p>
+<pre><code class="lang-bash"><span class="hljs-attribute">conda deactivate</span>
+</code></pre>
+<p>This command will deactivate the virtual environment.</p>
+<pre><code class="lang-bash">conda <span class="hljs-keyword">install</span> &lt;<span class="hljs-keyword">package</span> <span class="hljs-keyword">name</span>&gt;
+</code></pre>
+<p>This command will install the package <package name> in the virtual environment.</p>
+
+
 </body>
 </html>

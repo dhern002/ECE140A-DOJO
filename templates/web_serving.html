@@ -7,6 +7,55 @@
 </head>
 <body>
 {% include 'navbar.html' %}
+<h1 id="dojo-1">DOJO 1</h1>
+<h2 id="web-serving-">Web Serving:</h2>
+<p>How does websites work? Let&#39;s find out!</p>
+<h3 id="routing-">Routing:</h3>
+<p>To reach a website, you need to know the ip address of the server. This is 0.0.0.0 for a server that is running on
+your local machine. But what about other websites?</p>
+<pre><code class="lang-bash"><span class="hljs-built_in">ping</span> google.com
+</code></pre>
+<p>After google.com you will see an ip address. This is the ip address of the server that is hosting google.com. For
+a server to be accessible from the internet, it needs to have a public ip address. Which is one of the reasons why
+google.com is accessible from us but your local server is not.</p>
+<h3 id="ports-">Ports:</h3>
+<p>What is that number after the up address? That is the port number. A port is a communication endpoint. A number that is
+associated with a process. It is the final layer of the address to reach something on a network. Imagine your apartment
+number in your apartment building. The building is the ip address, the apartment number is the port number.</p>
+<p>80 is the default port for http. 8000, 6543, 5000 are common ports for web servers.</p>
+<h4 id="port-accessibility-">Port Accessibility:</h4>
+<p>Ports are not accessible from the internet by default. You need to open them up. This is done by configuring your router
+to forward traffic from a port to a specific ip address. This is called port forwarding. This is another reason
+why you can&#39;t access your local server from the internet. Your router is not configured to forward traffic from port
+8000 to your local ip</p>
+<h3 id="request-and-response-">Request and Response:</h3>
+<p>When you type in a url in your browser and hit enter, you are sending a request to the server. The server will then
+send a response back to you. This is the request and response cycle. There is a lot of requests and responses happening
+in modern web applications. You can observe these requests in the network tab of your browser&#39;s developer tools.</p>
+<p>You can make your very own requests using curl. </p>
+<pre><code class="lang-bash">curl www<span class="hljs-selector-class">.google</span><span class="hljs-selector-class">.com</span>
+</code></pre>
+<h3 id="making-our-own-server-">Making our own server:</h3>
+<p>We talked about how does the internet work, now lets discuss how to connect our own python code to the internet. We will
+be using fast api to create our own server. Fast api allows you to define what happens when a request is made to a specific
+url. A lot of the complicated stuff is handled for you by uvicorn and fast api. </p>
+<h4 id="uvicorn-">Uvicorn:</h4>
+<p>Uvicorn handles the port forwarding and the request and response cycle. It is a web server that is written in python. It
+opens up a port and listens for requests. When a request is made, it will send the request to the fast api application.</p>
+<h4 id="fast-api-">Fast API:</h4>
+<p>Fast api is a python framework for creating web servers. It allows you to define what happens when a request is made to a
+specific url. It also allows you to define what the response will be. It is a very powerful framework that is easy to use.</p>
+<h5 id="decorators-">Decorators:</h5>
+<p>Decorators are a way to modify the behavior of a function. They are a way to wrap a function with another function. Fast
+api uses decorators to define which requests will be handled by which functions. </p>
+<pre><code class="lang-python">@app.get(<span class="hljs-string">"/"</span>) <span class="hljs-comment"># This is a decorator forwards the get request to the root url to the root function</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">root</span><span class="hljs-params">()</span></span>:
+    <span class="hljs-keyword">return</span> {<span class="hljs-string">"message"</span>: <span class="hljs-string">"Hello World"</span>}
+</code></pre>
+<h5 id="side-note-">Side Note:</h5>
+<p>You need to install fast api and uvicorn to run the server. You can do this by running the following command:</p>
+<pre><code class="lang-bash">pip <span class="hljs-keyword">install</span> fastapi uvicorn
+</code></pre>
 
 </body>
 </html>

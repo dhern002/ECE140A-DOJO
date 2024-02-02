@@ -7,5 +7,45 @@
 </head>
 <body>
 {% include 'navbar.html' %}
+<h1 id="dojo-1">DOJO 1</h1>
+<h2 id="fast-api-">Fast API:</h2>
+<p>We talked about basics of python, web serving, and fast api. Now lets put it all together and create our own server.
+Goal is to create a website that will show people how to create a website themselves. Tune in next week for more info
+to add to the website, and eventually we will deploy it to the internet but for now lets start with the basics. </p>
+<h3 id="creating-a-fast-api-application-">Creating a Fast API application:</h3>
+<p>We will provide a skeleton for you to start with. You can find this in main.py. Routes to build:</p>
+<ul>
+<li>[get] /: This will be the home page. This page should have a navigation bar with links to the other pages and a brief description of the website.</li>
+<li>[get] /basics: This page will include information from basics.md</li>
+<li>[get] /web_serving: This page will include information from web_serving.md</li>
+<li>[get] /web_development: This page will include information from web_development.md</li>
+<li>[get] /view_notes: This page will include a text box to add notes</li>
+<li>[get] /notes: This will return all the notes that have been created.</li>
+<li>[post] /notes: This will send a new note to the backend.</li>
+</ul>
+<h3 id="serving-static-files-">Serving static files:</h3>
+<p>We will be serving 2 static files, a css file and a js file. These files will be in the static directory.
+CSS file will be used to style the website. JS file will be used to add functionality to the website.</p>
+<ul>
+<li>static/css/style.css</li>
+<li>static/js/script.js</li>
+</ul>
+<h3 id="templates-">Templates:</h3>
+<p>The html files will be in the templates&#39; directory. We will serve these files using fast api.</p>
+<ul>
+<li>templates/index.html</li>
+<li>templates/basics.html</li>
+<li>templates/web_serving.html</li>
+<li>templates/fast_api.html</li>
+<li>templates/web_development.html</li>
+<li>templates/notes.html</li>
+</ul>
+<h3 id="notes-">Notes:</h3>
+<p>We are going to use javascrit to add functionality to the website. We will be using fetch to make a post request to send
+our notes and a get request to get our notes. Notes will be stored in a file called notes.txt.</p>
+<h3 id="fast-api-decorators-">Fast API decorators:</h3>
+<p>We have included the decorators for the / and /notes routes. You will need to add the other routes. Create 3 more functions
+for basics page, web serving page, and web development page. Add the apporiate decorators to these functions. </p>
+
 </body>
 </html>

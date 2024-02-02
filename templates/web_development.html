@@ -7,6 +7,80 @@
 </head>
 <body>
 {% include 'navbar.html' %}
+<h1 id="dojo">DOJO</h1>
+<h2 id="javascript-">Javascript:</h2>
+<p>Wouldn&#39;t it be nice if we could add interactivity to our website? Well we can! We will be using javascript to add
+interactivity to our website. We will be using javascript to make requests to our backend dynamically update our website.</p>
+<h3 id="fetch-">Fetch:</h3>
+<p>Fetch is a way to make requests in javascript. It is a function that takes in a url and returns a promise.</p>
+<pre><code class="lang-javascript">fetch(<span class="hljs-string">"http://localhost:8000/notes"</span>)
+.then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> response.json()) <span class="hljs-comment">//promise chaining then happens when the previous promise is resolved</span>
+.then(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(data))
+.catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(error))
+</code></pre>
+<h3 id="promises-">Promises:</h3>
+<p>Promises are a way to handle asynchronous code. They are a way to handle code that takes a long time to run. You define
+what happens when the promise is resolved and what happens when the promise is rejected. </p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> promise = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+        resolve(<span class="hljs-string">"Hello World"</span>)
+    }, <span class="hljs-number">1000</span>) <span class="hljs-comment">// This promise will resolve after 1 second</span>
+})
+</code></pre>
+<h3 id="await-">Await:</h3>
+<p>Await is a way of handling promises. It is used to block the current scope until the promise is resolved. An example can be
+seen below: While we wait for the promise to resolve, we can&#39;t do anything else. This is why we need to use async functions
+if we want to continue execution while we wait for the promise to resolve.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> promise = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+        resolve(<span class="hljs-string">"Hello World"</span>)
+    }, <span class="hljs-number">1000</span>) <span class="hljs-comment">// This promise will resolve after 1 second</span>
+})
+
+<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> promise <span class="hljs-comment">// This will block the current scope until the promise is resolved</span>
+</code></pre>
+<h3 id="async-">Async:</h3>
+<p>Async is a way to define a function that will be executed asynchronously. This means that the function will be executed
+in the background, perhaps when a certain event happens. This is useful when we want to continue execution while we wait.
+You define what you would like to happen when the promise is resolved inside the then block.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">const</span> promise = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+        setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+            resolve(<span class="hljs-string">"Hello World"</span>)
+        }, <span class="hljs-number">1000</span>) <span class="hljs-comment">// This promise will resolve after 1 second</span>
+    })
+
+    promise.then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(result)) <span class="hljs-comment">//this will be executed after the promise is resolved</span>
+}
+</code></pre>
+<h3 id="event-listeners-">Event Listeners:</h3>
+<p>Event listeners are a way to define what happens when an event happens. An event can be a click, a key press, or a mouse
+movement. You can define what happens when an event happens by using event listeners. </p>
+<pre><code class="lang-javascript">const <span class="hljs-selector-tag">button</span> = document.getElementById(<span class="hljs-string">"button"</span>) <span class="hljs-comment">// This gets the button element from the html</span>
+<span class="hljs-selector-tag">button</span>.addEventListener(<span class="hljs-string">"click"</span>, () =&gt; { <span class="hljs-comment">// This adds an event listener to the button that listens for a click</span>
+    console.log(<span class="hljs-string">"Hello World"</span>)
+})
+</code></pre>
+<p>Important one is the DOMContentLoaded event. This event is fired when the DOM is loaded. This is useful when you want to
+run some code after the DOM is loaded. You would need elements to be loaded before you can query them and manipulate them.
+DOMContentLoaded is a way to ensure that the DOM is loaded before you run your code.</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"DOMContentLoaded"</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello World"</span>)
+})
+</code></pre>
+<h3 id="dom-manipulation-">DOM Manipulation:</h3>
+<p>DOM manipulation is a way to change the html of a page. You can change the html of a page by using javascript. You can
+change the text of an element, you can change the style of an element, you can add elements to the page, you can remove
+elements from the page. You can do all of this by using javascript. </p>
+<pre><code class="lang-javascript">const element = document.getElementById(<span class="hljs-string">"element"</span>) <span class="hljs-comment">// This gets the element from the html</span>
+element<span class="hljs-selector-class">.innerText</span> = <span class="hljs-string">"Hello World"</span> <span class="hljs-comment">// This changes the text of the element</span>
+element<span class="hljs-selector-class">.style</span><span class="hljs-selector-class">.color</span> = <span class="hljs-string">"red"</span> <span class="hljs-comment">// This changes the color of the element</span>
+element<span class="hljs-selector-class">.style</span><span class="hljs-selector-class">.backgroundColor</span> = <span class="hljs-string">"blue"</span> <span class="hljs-comment">// This changes the background color of the element</span>
+element<span class="hljs-selector-class">.style</span><span class="hljs-selector-class">.fontSize</span> = <span class="hljs-string">"20px"</span> <span class="hljs-comment">// This changes the font size of the element</span>
+element<span class="hljs-selector-class">.style</span><span class="hljs-selector-class">.border</span> = <span class="hljs-string">"1px solid black"</span> <span class="hljs-comment">// This adds a border to the element</span>
+</code></pre>
+<p>You should just make sure element is not null before you try to access it. This is because if the element is not found,
+it will return null. One reason behin d this might be that the element is not loaded yet.</p>
 
 </body>
 </html>

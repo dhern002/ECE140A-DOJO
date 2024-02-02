@@ -1,16 +1,85 @@
-import multipart
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, Request, HTTPException
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-import uvicorn
-import asyncio
 from fastapi.templating import Jinja2Templates
+import mysql.connector
+from dotenv import load_dotenv
+import os
 
+load_dotenv()  # Load environment variables
 
 # Create the FastAPI instance
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
+
+
+def get_db_connection():
+    return mysql.connector.connect(
+        host=os.getenv('MYSQL_HOST'),
+        user=os.getenv('MYSQL_USER'),
+        password=os.getenv('MYSQL_PASSWORD'),
+        database=os.getenv('MYSQL_DATABASE')
+    )
+
+
+@app.get("/items", response_class=HTMLResponse)
+async def get_items(request: Request):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM items")
+    items = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return templates.TemplateResponse("items.html", {"request": request, "items": items})
+
+
+@app.post("/items", response_class=HTMLResponse)
+async def add_item(request: Request, name: str = Form(...), description: str = Form(""), price: float = Form(...)):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO items (name, description, price) VALUES (%s, %s, %s)", (name, description, price))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return await get_items(request)
+    except mysql.connector.Error as err:
+        return templates.TemplateResponse("error.html", {"request": request, "message": str(err)})
+
+
+@app.post("/items/update", response_class=HTMLResponse)
+async def update_item(request: Request, id: int = Form(...), name: str = Form(None), description: str = Form(None),
+                      price: float = Form(None)):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        update_data = []
+        sql_update_query = "UPDATE items SET "
+        if name:
+            sql_update_query += "name = %s,"
+            update_data.append(name)
+        if description:
+            sql_update_query += "description = %s,"
+            update_data.append(description)
+        if price is not None:
+            sql_update_query += "price = %s,"
+            update_data.append(price)
+
+        # Remove trailing comma
+        sql_update_query = sql_update_query.rstrip(',')
+        sql_update_query += " WHERE id = %s"
+        update_data.append(id)
+
+        cursor.execute(sql_update_query, tuple(update_data))
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=404, detail="Item not found")
+
+        return await get_items(request)
+    except mysql.connector.Error as err:
+        return templates.TemplateResponse("error.html", {"request": request, "message": str(err)})
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -89,9 +158,9 @@ async def say_hello(name: str):
 
 
 @app.get("/slowdemo")
-async def get_demo():
-    with open("templates/slowdemo.html") as html:
-        return HTMLResponse(content=html.read())
+async def get_demo(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse('slowdemo.html', {'request': request})
+
 
 
 @app.get("/slowroute")

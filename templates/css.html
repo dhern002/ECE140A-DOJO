@@ -7,7 +7,7 @@
         body {
             background: #333;
             font-family: sans-serif;
-            color: white;
+            color: black;
             font-size: 2rem;
             border: 2px solid blue;
             padding: 1vw;
@@ -34,5 +34,58 @@
 <div class="cool">
     Hello ECE 140A Dojo!
 </div>
+
+<h1 id="dojo-1-">DOJO 1:</h1>
+<h2 id="css-basics-">CSS Basics:</h2>
+<h3 id="structure-">Structure:</h3>
+<pre><code class="lang-css"><span class="hljs-selector-tag">body</span> {
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">display</span>: flex;
+    <span class="hljs-attribute">flex-direction</span>: column;
+    <span class="hljs-attribute">align-items</span>: center;
+    <span class="hljs-attribute">background-color</span>: blanchedalmond;
+}
+</code></pre>
+<p>Every CSS rule consists of a few parts. There is a selector, property, and value to be assigned to the property. In this example, the selector is <code>body</code>, and this selects any <code>body</code> elements in the document (there should only be one though). Inside the <code>{}</code> are the declarations. First, we have the property value <code>padding</code>, and we are assigning it a value of <code>0</code>. All declarations consist of the property name which we want to effect, and the value we want to assign. CSS is relatively more complicated than HTML, as there are a wide range of selectors as well as property values. If you are interested in learning more, please check out the <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics">MDN CSS Docs.</a></p>
+<h3 id="how-to-use-">How to Use:</h3>
+<p>CSS can be included in a webpage in a few different ways. Firstly, it can be definied directly in the HTML page by using the style tag as shown below.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">
+    <span class="hljs-selector-tag">body</span> {
+        <span class="hljs-attribute">background-color</span>: blanchedalmond;
+    }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+</code></pre>
+<p>Isn&#39;t css so cool? You can add all kinds of colors. We choose blanchedalmond because it is the best sounding color.</p>
+<p>The snippet above will change the background color of the body tag (essentially the whole visible webpage) to the specified color. CSS supports raw RGB, hex, and other color formats, as well as some pre-defined names.</p>
+<hr>
+<p>In addition to the style element, CSS can be contained in its own file, separate from the HTML, and then essentially imported by the HTML page.</p>
+<pre><code class="lang-html">
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"../static/css/index.css"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+</code></pre>
+<pre><code class="lang-css"><span class="hljs-selector-tag">body</span> {
+    <span class="hljs-attribute">background-color</span>: blanchedalmond;
+}
+</code></pre>
+<p>The <code>&lt;link&gt;</code> tag tells the browser that it needs to request the stylesheet resource located at <code>css/index.css</code>, and to load it as a stylesheet. Using an external stylesheet is helpful when you have multiple different web-pages and want to share style between them (not having to write the same code multiple times).</p>
+<hr>
+<p>The last main way CSS can be used in a web-page is inline through the <code>style</code> attribute on any element in an HTML page.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"color: red;"</span>&gt;</span>Welcome to the ECE 140A Dojo!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<p>Notice that when inline styling is used, the selector is omitted, and the rule is directly written there. Inline style is useful when trying small tweaks to perfect your layout.</p>
+<hr>
+<p>The most important part, how do I center items in a webpage? One of the easiest ways to do so is the following.</p>
+<pre><code class="lang-css"><span class="hljs-selector-tag">body</span> {
+    <span class="hljs-attribute">display</span>: flex;
+    <span class="hljs-attribute">flex-direction</span>: column;
+    <span class="hljs-attribute">flex-wrap</span>: wrap;
+    <span class="hljs-attribute">align-items</span>: center;
+}
+</code></pre>
+<p>Flex or flexbox is a powerful tool for creating engaging layouts. With just these four simple declarations on whatever HTML element contains the elements you want centered, all of them are centered! </p>
+
 </body>
 </html>
