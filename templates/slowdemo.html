@@ -85,19 +85,34 @@
         blocking = false;
         responseDiv.style.backgroundColor = 'red';
     });
-    let timezones;
+
+
+
+
+
+
+    let timezones = "hi";
     let timezone = document.querySelector('#timezone');
 
     fetch('/timezones')
         .then(response => response.json())
         .then(data => {
             timezones = data.timezone;
+            timezone.innerText = timezones;
         });
     timezone.innerText = timezones;
-    function updateTime() {
-        timezone.innerText = timezones.toString();
-    }
+    // function updateTime() {
+    //     timezone.innerText = timezones.toString();
+    // }
     // setInterval(updateTime, 100);
+
+
+
+
+
+
+
+
 
     let clock = document.querySelector('#clock');
     let i = 0;
