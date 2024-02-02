@@ -1,3 +1,4 @@
 /.idea
 notes.txt
+.env
 # add a entry here to ignore the notes.txt file and the venv folder
