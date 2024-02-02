@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 import mysql.connector
 from dotenv import load_dotenv
 import os
+import uvicorn
 
 load_dotenv()  # Load environment variables
 
@@ -14,9 +15,9 @@ templates = Jinja2Templates(directory="templates")
 
 def get_db_connection():
     return mysql.connector.connect(
-        host=os.getenv('MYSQL_HOST'),
-        user=os.getenv('MYSQL_USER'),
-        password=os.getenv('MYSQL_PASSWORD'),
+        host="db", # because we are inside docker compose, we can use the service name as the host name
+        user="root",
+        password=os.getenv('MYSQL_ROOT_PASSWORD'),
         database=os.getenv('MYSQL_DATABASE')
     )
 
