@@ -1,4 +1,5 @@
 /.idea
 notes.txt
 .env
+db-data
 # add a entry here to ignore the notes.txt file and the venv folder
