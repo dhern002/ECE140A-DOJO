@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Form, Request, HTTPException
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import mysql.connector
 from dotenv import load_dotenv
@@ -11,6 +12,7 @@ load_dotenv()  # Load environment variables
 # Create the FastAPI instance
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 def get_db_connection():
