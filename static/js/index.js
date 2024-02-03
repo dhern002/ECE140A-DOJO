@@ -6,6 +6,7 @@ function loadNotes() {
     fetch('/notes')
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             document.getElementById('notesArea').value = data.notes;
         })
         .catch(error => console.error('Error:', error));

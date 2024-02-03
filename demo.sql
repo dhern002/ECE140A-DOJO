@@ -10,3 +10,11 @@ INSERT INTO items (name, description, price) VALUES
 ('Laptop', 'A high-performance laptop.', 1200.00),
 ('Smartphone', 'An advanced smartphone.', 800.00),
 ('Tablet', 'A versatile tablet.', 600.00);
+
+CREATE TABLE IF NOT EXISTS notes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    note VARCHAR(1000) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO notes (note) VALUE ('Hi there!')
