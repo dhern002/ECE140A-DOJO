@@ -28,12 +28,13 @@ CREATE TABLE IF NOT EXISTS orders (
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Get all the items that have been ordered, and display the name of the item and the name of who bought it
 SELECT users.name AS name, items.item_name
 FROM users
          INNER JOIN orders ON users.user_id = orders.user_id
          INNER JOIN items ON orders.item_id = items.item_id;
 
-
+-- Get the total amount that every user has spent with their name
 SELECT users.name AS name,
        SUM(items.price) AS total_spent
 FROM users
@@ -42,6 +43,7 @@ FROM users
 GROUP BY users.user_id, users.name;
 
 
+-- Get all the items bought with the name and the user, and then group by age of the buyers (to see trends in data)
 SELECT
     users.name AS user_name,
     items.item_name,
@@ -55,6 +57,8 @@ FROM
         LEFT JOIN items ON orders.item_id = items.item_id
 ORDER BY age_group;
 
+
+-- Find total amount spent by the older group and the younger group
 SELECT
     CASE
         WHEN TIMESTAMPDIFF(YEAR, users.date_of_birth, CURDATE()) >= 30 THEN 'Older Person'
