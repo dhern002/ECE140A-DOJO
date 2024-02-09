@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         new_clock.querySelector('article').id = `clock${num_clocks}`;
         indices.push(num_clocks);
         let date = new Date;
-        let time = new_clock.querySelector('time');
         new_clock.querySelector('time').innerText = (date.toLocaleTimeString());
         clock_holder.appendChild(new_clock);
     };
@@ -55,7 +54,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         let clocks = document.querySelectorAll('.clock');
         clocks.forEach((x) => {
             let timezone_offset = x.querySelector('strong').innerText;
-            let date = new Date();
             x.querySelector('time').innerText = getTime(timezone_offset);
         });
     }
