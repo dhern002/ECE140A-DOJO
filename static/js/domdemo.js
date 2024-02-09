@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     document.querySelector('#add').addEventListener("submit", (event) => {
        event.preventDefault();
        let input = event.target.querySelector(`input[type='text']`).value;
-       if(timezones.hasOwnProperty(input)) {
-           add_clock(input);
+       if(timezones.hasOwnProperty(input.toUpperCase())) {
+           add_clock(input.toUpperCase());
        } else {
            alert('wrong');
        }
