@@ -22,7 +22,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 def get_db_connection():
     return mysql.connector.connect(
-        host="db", # because we are inside docker compose, we can use the service name as the host name
+        host="localhost", # because we are inside docker compose, we can use the service name as the host name
         user="root",
         password=os.getenv('MYSQL_ROOT_PASSWORD'),
         database=os.getenv('MYSQL_DATABASE')
