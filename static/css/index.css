@@ -5,6 +5,16 @@ body {
     font-family: Arial, sans-serif;
 }
 
+body > * {
+    margin-left: 3vw;
+    margin-right: 3vw;
+}
+
+nav, nav *{
+    margin-left: 0;
+    margin-right: 0;
+}
+
 .navbar {
     background-color: #333;
     overflow: hidden;

@@ -6,6 +6,7 @@ import mysql.connector
 from dotenv import load_dotenv
 import os
 import uvicorn
+import asyncio
 
 load_dotenv()  # Load environment variables
 
@@ -34,7 +35,9 @@ async def get_items(request: Request):
     conn.close()
     return templates.TemplateResponse("items.html", {"request": request, "items": items})
 
-
+@app.get("/domdemo", response_class=HTMLResponse)
+async def get_demo(request: Request):
+    return templates.TemplateResponse("DOMManipulation.html", {"request": request})
 @app.post("/items", response_class=HTMLResponse)
 async def add_item(request: Request, name: str = Form(...), description: str = Form(""), price: float = Form(...)):
     try:
