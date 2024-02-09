@@ -133,7 +133,9 @@ async def get_items(request: Request):
     conn.close()
     return templates.TemplateResponse("items.html", {"request": request, "items": items})
 
-
+@app.get("/domdemo", response_class=HTMLResponse)
+async def get_demo(request: Request):
+    return templates.TemplateResponse("DOMManipulation.html", {"request": request})
 @app.post("/items", response_class=HTMLResponse)
 async def add_item(request: Request, name: str = Form(...), description: str = Form(""), price: float = Form(...)):
     try:
@@ -228,14 +230,20 @@ def get_web_serving_html(request: Request) -> HTMLResponse:
 
 
 @app.get("/notes")
-async def read_notes():
+async def read_notes(request: Request):
     """
     Read the notes from the file and return them.
     :return:
     """
     try:
-        with open("notes.txt", "r") as file:
-            content = file.read()
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT note FROM notes ORDER BY `created_at` desc LIMIT 1")
+        items = cursor.fetchone()
+        print(items["note"])
+        cursor.close()
+        conn.close()
+        return {"notes": items["note"]}
     except FileNotFoundError:
         content = "No notes yet."
     return {"notes": content}

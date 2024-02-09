@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Manipulation Demo</title>
+    <link rel="stylesheet" media="screen" href="static/css/index.css">
+    <script src="static/js/domdemo.js"></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <h1>Here's a demo on how to do some useful DOM manipulations!</h1>
+    <article>Manipulating the DOM (Document Object Model) with JavaScript allows web developers to do some pretty
+    cool stuff. You can edit the content of elements on the page, change attributes, and even create brand new elements and
+    add them to the DOM. Some care should be exercised when doing this, as every manipulation adds up.</article>
+    <form id="add">
+        <fieldset>
+            <legend>Add a clcok!</legend>
+            <label>
+                Timezone abbreviation: <input type="text">
+            </label>
+            <label>
+                <input type="submit">
+            </label>
+        </fieldset>
+    </form>
+    <form id="remove">
+        <fieldset>
+            <legend>Remove a clock!</legend>
+        <label>
+            Remove clocka t index: <input type="number">
+        </label>
+        <input type="submit">
+        </fieldset>
+    </form>
+    <section id="clock_holder">
+
+    </section>
+</body>
+<template>
+    <article class="clock">
+        <p>In the <strong></strong> timezone, it is currently <time></time></p>
+    </article>
+</template>
+</html>
