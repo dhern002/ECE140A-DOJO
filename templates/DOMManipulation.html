@@ -12,7 +12,7 @@
     <article>Manipulating the DOM (Document Object Model) with JavaScript allows web developers to do some pretty
     cool stuff. You can edit the content of elements on the page, change attributes, and even create brand new elements and
     add them to the DOM. Some care should be exercised when doing this, as every manipulation adds up.</article>
-    <form>
+    <form id="add">
         <fieldset>
             <legend>Add a clcok!</legend>
             <label>
@@ -23,6 +23,18 @@
             </label>
         </fieldset>
     </form>
+    <form id="remove">
+        <fieldset>
+            <legend>Remove a clock!</legend>
+        <label>
+            Remove clocka t index: <input type="number">
+        </label>
+        <input type="submit">
+        </fieldset>
+    </form>
+    <section id="clock_holder">
+
+    </section>
 </body>
 <template>
     <article class="clock">
