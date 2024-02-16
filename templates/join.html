@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders Dashboard</title>
+    <link rel="stylesheet" href="static/css/index.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <h1>Orders Dashboard</h1>
+    <button id="fastButton">Fast Join</button>
+    <button id="slowButton">Slow Join</button>
+    <button id="challenge1">Challenge 1</button>
+    <button id="challenge2">Challenge 2</button>
+    <p id="timeTaken"></p>
+
+    <table id="ordersTable"></table> <!-- Removed static headers -->
+
+    <script>
+        document.getElementById('fastButton').addEventListener('click', function() {
+            fetchData('/api/joinFast');
+        });
+        document.getElementById('slowButton').addEventListener('click', function() {
+            fetchData('/api/joinSlow');
+        });
+        document.getElementById('challenge1').addEventListener('click', function() {
+            fetchData('/api/challenge1');
+        });
+        document.getElementById('challenge2').addEventListener('click', function() {
+            fetchData('/api/challenge2');
+        });
+
+        function fetchData(route) {
+            fetch(route)
+                .then(response => response.json())
+                .then(({data, time_taken}) => {
+                    const table = document.getElementById('ordersTable');
+                    if (!Array.isArray(data) || data.length === 0) {
+                        table.innerHTML = `<p>No data available</p>`;
+                        return;
+                    }
+
+                    // Create headers dynamically based on keys from the first item
+                    const headers = Object.keys(data[0]);
+                    const headerRow = headers.map(header => `<th>${header.replace(/_/g, ' ')}</th>`).join('');
+
+                    // Create rows dynamically
+                    const rows = data.map(item => {
+                        return `<tr>${headers.map(header => `<td>${item[header]}</td>`).join('')}</tr>`;
+                    }).join('');
+
+                    // Combine headers and rows to update table
+                    table.innerHTML = `<tr>${headerRow}</tr>${rows}`;
+
+                    document.getElementById('timeTaken').textContent = `Time taken: ${time_taken.toFixed(2)} seconds`;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+    </script>
+</body>
+
+</html>

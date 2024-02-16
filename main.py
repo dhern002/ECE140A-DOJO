@@ -1,3 +1,5 @@
+import asyncio
+
 from fastapi import FastAPI, Form, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -6,7 +8,7 @@ import mysql.connector
 from dotenv import load_dotenv
 import os
 import uvicorn
-import asyncio
+import time
 
 load_dotenv()  # Load environment variables
 
@@ -16,14 +18,110 @@ templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
+#)____________________________________________________NEW WEEK_______________________________________________________
+
 def get_db_connection():
     return mysql.connector.connect(
-        host="db", # because we are inside docker compose, we can use the service name as the host name
+        host="localhost", # because we are inside docker compose, we can use the service name as the host name
         user="root",
         password=os.getenv('MYSQL_ROOT_PASSWORD'),
         database=os.getenv('MYSQL_DATABASE')
     )
+@app.get("/join")
+async def get_join(request: Request):
+    return templates.TemplateResponse("join.html", {"request": request})
 
+@app.get("/api/joinFast")
+async def get_fast():
+    start_time = time.time()
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        query = """
+        SELECT orders.order_id, customers.name AS customer_name, customers.email, products.name AS product_name, products.price, order_items.quantity, orders.order_date, orders.status
+        FROM orders
+        JOIN customers ON orders.customer_id = customers.customer_id
+        JOIN order_items ON orders.order_id = order_items.order_id
+        JOIN products ON order_items.product_id = products.product_id;
+        """
+        cursor.execute(query)
+        result = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        end_time = time.time()
+        duration = end_time - start_time
+        return {"data": result, "time_taken": duration}
+    except mysql.connector.Error as e:
+        print(f"Error: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching orders on fast route")
+
+@app.get("/api/joinSlow")
+async def get_slow():
+    start_time = time.time()
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # Fetch all orders
+        cursor.execute("SELECT * FROM orders;")
+        orders = cursor.fetchall()
+
+        # For each order, fetch corresponding customer and order item details, then product details for each order item
+        for order in orders:
+            cursor.execute("SELECT name AS customer_name, email FROM customers WHERE customer_id = %s;", (order['customer_id'],))
+            customer = cursor.fetchone()
+            order['customer_name'] = customer['customer_name']
+            order['email'] = customer['email']
+
+            cursor.execute("SELECT product_id, quantity FROM order_items WHERE order_id = %s;", (order['order_id'],))
+            order_items = cursor.fetchall()
+
+            products_details = []
+            for item in order_items:
+                cursor.execute("SELECT name AS product_name, price FROM products WHERE product_id = %s;", (item['product_id'],))
+                product = cursor.fetchone()
+                product['quantity'] = item['quantity']
+                products_details.append(product)
+
+            for products_detail in products_details:
+                order['product_name'] = products_detail["product_name"]
+                order['price'] = products_detail["price"]
+                order['quantity'] = products_detail["quantity"]
+
+        cursor.close()
+        connection.close()
+        end_time = time.time()
+        duration = end_time - start_time
+        return {"data": orders, "time_taken": duration}
+    except mysql.connector.Error as e:
+        print(f"Error: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching orders on slow route")
+
+@app.get("/api/challenge1")
+async def challenge1():
+    try:
+        """
+        Write a query to retrieve all customers and any orders they might have placed. 
+        Include customers who haven't placed any orders. This demonstrates how to use a 
+        LEFT JOIN to include all records from the 'left' table (customers) and matched records 
+        from the 'right' table (orders), plus NULL in case of no match.
+        """
+    except mysql.connector.Error as e:
+        print(f"Error: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching total orders by customer")
+
+
+@app.get("/api/challenge2")
+async def challenge2():
+    try:
+        """
+        -- Challenge: Write a GROUP BY query to calculate total revenue by category here
+        """
+    except mysql.connector.Error as e:
+        print(f"Error: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching total revenue by category")
+
+#)____________________________________________________PREVIOUS WEEK_______________________________________________________
 
 @app.get("/items", response_class=HTMLResponse)
 async def get_items(request: Request):
