@@ -1,5 +1,7 @@
 /.idea
 notes.txt
-.env
-db-data
+DOJO_1-5/.env
+DOJO_6-10/.env
+DOJO_1-5/db-data
+DOJO_6-10/db-data
 # add a entry here to ignore the notes.txt file and the venv folder

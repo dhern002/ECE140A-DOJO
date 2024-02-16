@@ -8,7 +8,7 @@ conn = mysql.connector.connect(
     database="emin"
 )
 
-# Create a cursor to execute SQL queries
+# Create a cursor to execute Migrations queries
 cursor = conn.cursor()
 
 # Fetch data for older people

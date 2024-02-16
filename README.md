@@ -1,23 +1,4 @@
-# ECE140 - DOJO
+# ECE140 DOJO
 
-# Pre-reqs:
-```bash
-pip install -r requirements.txt
-```
-
-## Week 2:
-Getting started
-
-## Week 3:
-Interaction Design:
-* Learn about CSS 
-* Learn about JS
-* Learn about Promises
-* Debug Promises
-* Navigation bar
-* Introduction to templating
-
-
-## Week 4:
-
-
+You can find DOJO content for 1-5 weeks in the DOJO_1-5 folder.
+Weeks 6-10 will be in the DOJO_6-10 folder and we will be building a multiplayer online game.

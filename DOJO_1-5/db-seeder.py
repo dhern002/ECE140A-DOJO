@@ -88,6 +88,7 @@ def seed(n=1000):
 
     print("Data insertion completed.")
 
+
 if __name__ == "__main__":
     seed(1000)
     pass
