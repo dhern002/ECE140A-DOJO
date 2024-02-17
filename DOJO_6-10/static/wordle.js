@@ -34,4 +34,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
        console.log(username.value);
        console.log(password.value);
     });
+
+    log_in_form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        console.log(event.target);
+        let username = event.target.querySelector('input[type="text"]').value;
+        let password = event.target.querySelector('input[type="password"]').value;
+        let data = {'username': username, 'password': password};
+        localStorage.setItem("WordleAuth", "hi123123123123");
+        fetch('/login', {
+            method: "POST",
+            headers: {
+                "Authorization": localStorage.getItem("WordleAuth"),
+                "X-sent-by": "My wordle game"
+            },
+            body: JSON.stringify({"hi": "hi"})
+        });
+    });
 })
