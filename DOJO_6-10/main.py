@@ -28,7 +28,13 @@ def get_db_connection():
 async def get_home(request: Request):
     return templates.TemplateResponse("wordle.html", {"request": request})
 
-
+@app.post("/create-user")
+async def create_user(request: Request):
+    json = await request.json()
+    username = json["username"]
+    password = json["password"]
+    print(json)
+    return json
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 

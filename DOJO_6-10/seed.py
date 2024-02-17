@@ -1,6 +1,7 @@
 import mysql.connector
 import os
 import hashlib
+from dotenv import load_dotenv
 
 
 def hash_password(password):
@@ -11,17 +12,19 @@ def hash_password(password):
 def seed_users():
     # User data to seed
     users = [
-        {'username': 'testuser', 'email': 'test@example.com', 'password': 'password123'}
+        {'username': 'testuser', 'email': 'test@example.com', 'password': 'password123'},
+        {'username': 'dom500d', 'email': 'dorlando@ucsd.edu', 'password': 'verysecurepass'}
     ]
 
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password=os.getenv('MYSQL_ROOT_PASSWORD'),
+        database=os.getenv('MYSQL_DATABASE')
+    )
     try:
         # Connect to the MySQL database using environment variables
-        conn = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password=os.getenv('MYSQL_ROOT_PASSWORD'),
-            database=os.getenv('MYSQL_DATABASE')
-        )
+
         cursor = conn.cursor()
 
         for user in users:
@@ -48,4 +51,5 @@ def seed_users():
 
 
 if __name__ == "__main__":
+    load_dotenv()
     seed_users()

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wordle</title>
+    <link rel="icon" href="static/favicon.ico">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        section button {
+            width: 10vw;
+        }
+        form {
+            display:  none;
+        }
+    </style>
+    <script src="static/wordle.js"></script>
+</head>
+<body>
+    <h1>Welcome to Wordle!</h1>
+    <section>
+        <h2>Ready to play?</h2>
+        <button id="create">Create Account</button>
+        <button id="login">Log in</button>
+        <form action="/create-account" method="post">
+            <fieldset>
+                <legend>Create an Account</legend>
+                <label>
+                    Username: <input type="text">
+                </label>
+                <label>
+                    Password: <input type="password">
+                </label>
+                <input type="submit">
+            </fieldset>
+        </form>
+        <form action="/log-in" method="post">
+            <fieldset>
+                <legend>Log In</legend>
+                <label>
+                    Username: <input type="text">
+                </label>
+                <label>
+                    Password: <input type="password">
+                </label>
+                <input type="submit">
+            </fieldset>
+
+        </form>
+    </section>
+</body>
+</html>
