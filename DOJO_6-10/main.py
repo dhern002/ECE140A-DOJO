@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response, Request, HTTPException, status
+from fastapi import FastAPI, Response, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -61,13 +61,13 @@ async def get_logout(request: Request, response: Response):
 
 
 @app.post('/login', status_code=status.HTTP_200_OK)
-def post_login(visitor: Visitor, request: Request, response: Response, next_route = "/") -> RedirectResponse:
+def post_login(visitor: Visitor, request: Request, response: Response, next_route="/") -> RedirectResponse:
     username = visitor.username
     password = visitor.password
 
-
     # Authenticate the user
     if login(username, password, request, response):
+        # why do we have to set cookie here?
         return RedirectResponse(next_route, status_code=200, headers={'set-cookie': response.headers.get("set-cookie")})
     else:
         response.status_code = status.HTTP_401_UNAUTHORIZED
@@ -76,10 +76,9 @@ def post_login(visitor: Visitor, request: Request, response: Response, next_rout
 
 @app.get('/protected')
 @logged_in
-def get_protected(request: Request) -> dict:
+def get_protected() -> dict:
     return {'message': 'Access granted'}
 
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-

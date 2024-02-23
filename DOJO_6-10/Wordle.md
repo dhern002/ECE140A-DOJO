@@ -31,8 +31,14 @@ each other in real-time.
 
 ### Objectives:
 - Develop the frontend using JavaScript, CSS, and HTML.
-- Implement a responsive user interface for the game.
-- Integrate the frontend with the FastAPI backend using AJAX for data fetching and submission.
+- Go through Sessions, Cookies, and JWT for user authentication.
+- Talk about authentication libraries.
+
+
+## Week 8: Real-time Gameplay with WebSockets
+
+### Objectives:
+- Develop the frontend using JavaScript, CSS, and HTML.
 
 ### Tasks:
 1. Design and implement the game interface, including the keyboard and guess grid.
@@ -40,21 +46,9 @@ each other in real-time.
 3. Style the application using CSS to ensure a responsive and attractive design.
 4. Connect the frontend to the backend API for user authentication, game interactions, and retrieving game results.
 
-## Week 8: Real-time Gameplay with WebSockets
-
-### Objectives:
-- Implement real-time multiplayer functionality using WebSockets.
-- Enable live updates for players' guesses and game progress.
-
-### Tasks:
-1. Integrate WebSockets with the FastAPI backend to handle real-time communication.
-2. Modify the frontend to support real-time gameplay, allowing multiple users to play and see each other's progress live.
-3. Ensure synchronization of game state across all connected clients.
-
 ## Week 9: Testing and Debugging
 
 ### Objectives:
-- Continue with multiplayer functionality using WebSockets. 
 - Perform comprehensive testing to identify and fix bugs.
 - Optimize performance and ensure security best practices are followed.
 
