@@ -30,11 +30,19 @@ class Visitor(BaseModel):
     password: str
 
 """
-Helper function to see if a user is authenticated
+Helper function to see if a user provided correct username and password
 """
-def is_authenticated(username:str, password:str) -> bool:
+def is_authenticated(username: str, password: str) -> bool:
     return db.check_user_password(username, password)
 
+"""
+Helper function to see if a user has a valid session
+"""
+def has_valid_session(request: Request) -> bool:
+    session = sessionManager.get_session(request)
+    if len(session) > 0:
+        return True
+    return False
 @app.get("/", response_class=HTMLResponse)
 async def get_home(request: Request):
     return templates.TemplateResponse("wordle.html", {"request": request, 'users': db.select_users()})
@@ -101,6 +109,13 @@ def post_login(visitor: Visitor, request: Request, response: Response) -> dict:
         response.status_code = status.HTTP_401_UNAUTHORIZED
         return {'message': 'Invalid username or password', 'session_id': 0}
 
+@app.get('/protected')
+def get_protected(request: Request) -> dict:
+    if has_valid_session(request):
+        return {'message': 'Access granted'}
+    else:
+        return {'message': 'Access denied'}
+    
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
