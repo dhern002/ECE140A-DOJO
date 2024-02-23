@@ -50,9 +50,9 @@ def logged_in(func):
     async def wrapper(request: Request, *args, **kwargs):
 
         session = sessionManager.get_session(request)
-        print(session)
+
         if len(session) > 0:
-            return await func(request, *args, **kwargs)  # Pass the request
+            return func(request, *args, **kwargs)  # Pass the request
         else:
             return RedirectResponse("/", status_code=302)
 
