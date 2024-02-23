@@ -70,7 +70,6 @@ async def create_user(user: User, response: Response):
         return
     return get_user(new_id)
 
-
 @app.get("/wordle", response_class=HTMLResponse, status_code=status.HTTP_200_OK)
 async def get_wordle(request: Request):
     # would be nice if we had a function to check if someone is logged in
@@ -79,8 +78,6 @@ async def get_wordle(request: Request):
         return templates.TemplateResponse("wordle.html", {"request": request})
     else:
         return RedirectResponse("/", status_code=302)
-
-
 
 @app.get("/logout", response_class=HTMLResponse)
 async def get_logout(request: Request):
@@ -115,7 +112,7 @@ def get_protected(request: Request) -> dict:
         return {'message': 'Access granted'}
     else:
         return {'message': 'Access denied'}
-    
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
