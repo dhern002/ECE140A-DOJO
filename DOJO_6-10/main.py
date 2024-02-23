@@ -3,49 +3,24 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from dotenv import load_dotenv
-from pydantic import BaseModel
 import uvicorn
-from sessiondb import Sessions
 import db_utils as db
-load_dotenv()  # Load environment variables
+from auth import logged_in, logout, login
+from models import User, Visitor
+
+# Load environment variables
+load_dotenv()
 
 # Create the FastAPI instance
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
-sessionManager = Sessions(db.db_config, secret_key=db.session_config['session_key'], expiry=600)
 
-"""
-Create user and visitor classes that match our SQL schema
-"""
-class User(BaseModel):
-    username: str
-    password: str
-    email: str
-    first_name: str
-    last_name: str
 
-class Visitor(BaseModel):
-    username: str
-    password: str
-
-"""
-Helper function to see if a user provided correct username and password
-"""
-def is_authenticated(username: str, password: str) -> bool:
-    return db.check_user_password(username, password)
-
-"""
-Helper function to see if a user has a valid session
-"""
-def has_valid_session(request: Request) -> bool:
-    session = sessionManager.get_session(request)
-    if len(session) > 0:
-        return True
-    return False
 @app.get("/", response_class=HTMLResponse)
 async def get_home(request: Request):
     return templates.TemplateResponse("wordle.html", {"request": request, 'users': db.select_users()})
+
 
 @app.get('/users')
 def get_users() -> dict:
@@ -54,12 +29,14 @@ def get_users() -> dict:
     users = [dict(zip(keys, user)) for user in users]
     return {"users": users}
 
+
 @app.get('/users/{user_id}')
 def get_user(user_id: int) -> dict:
     user = db.select_users(user_id)
     if user:
         return {'id': user[0], 'username': user[1], 'email': user[2], 'first_name': user[3], 'last_name': user[4]}
     return {}
+
 
 @app.post("/users", status_code=status.HTTP_201_CREATED)
 async def create_user(user: User, response: Response):
@@ -72,50 +49,36 @@ async def create_user(user: User, response: Response):
 
 
 @app.get("/wordle", response_class=HTMLResponse, status_code=status.HTTP_200_OK)
+@logged_in  # Decorator to check if user is logged in
 async def get_wordle(request: Request):
-    # would be nice if we had a function to check if someone is logged in
-    session = sessionManager.get_session(request)
-    if len(session) > 0 and session.get('logged_in'):
-        return templates.TemplateResponse("wordle.html", {"request": request})
-    else:
-        return RedirectResponse("/", status_code=302)
-
+    return templates.TemplateResponse("wordle.html", {"request": request})
 
 
 @app.get("/logout", response_class=HTMLResponse)
-async def get_logout(request: Request):
-    secret_hash = request.headers.get("Authorization")
-    if not secret_hash:
-        return RedirectResponse("/", status_code=302)
-    auth.user_logout(secret_hash)
+async def get_logout(request: Request, response: Response):
+    logout(request, response)
     return RedirectResponse("/", status_code=302)
 
+
 @app.post('/login', status_code=status.HTTP_200_OK)
-def post_login(visitor: Visitor, request: Request, response: Response) -> dict:
+def post_login(visitor: Visitor, request: Request, response: Response, next_route = "/") -> RedirectResponse:
     username = visitor.username
     password = visitor.password
 
-    # Invalidate previous session if logged in
-    session = sessionManager.get_session(request)
-    if len(session) > 0:
-        sessionManager.end_session(request, response)
-
     # Authenticate the user
-    if db.check_user_password(username, password):
-        session_data = {'username': username, 'logged_in': True}
-        session_id = sessionManager.create_session(response, session_data)
-        return {'message': 'Login successful', 'session_id': session_id}
+    if login(username, password, request, response):
+        return RedirectResponse(next_route, status_code=200)
     else:
         response.status_code = status.HTTP_401_UNAUTHORIZED
-        return {'message': 'Invalid username or password', 'session_id': 0}
+        return RedirectResponse("/", status_code=401)
+
 
 @app.get('/protected')
+@logged_in
 def get_protected(request: Request) -> dict:
-    if has_valid_session(request):
-        return {'message': 'Access granted'}
-    else:
-        return {'message': 'Access denied'}
-    
+    return {'message': 'Access granted'}
+
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
