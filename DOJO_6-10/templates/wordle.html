@@ -34,10 +34,19 @@
             <fieldset>
                 <legend>Create an Account</legend>
                 <label>
-                    Username: <input type="text">
+                    Username: <input type="text" name="username">
                 </label>
                 <label>
-                    Password: <input type="password">
+                    Password: <input type="password" name="password">
+                </label>
+                <label>
+                    First name: <input type="text" name="first_name">
+                </label>
+                <label>
+                    Last name: <input type="text" name="last_name">
+                </label>
+                <label>
+                    Email: <input type="email" name="email">
                 </label>
                 <input type="submit">
             </fieldset>
@@ -46,14 +55,27 @@
             <fieldset>
                 <legend>Log In</legend>
                 <label>
-                    Username: <input type="text">
+                    Username: <input type="text" name="username">
                 </label>
                 <label>
-                    Password: <input type="password">
+                    Password: <input type="password" name="password">
                 </label>
                 <input type="submit">
             </fieldset>
         </form>
     </section>
+    {# loop through the records and render them #}
+    {% for user in users %}
+    <div class='row' data-id='{{ user[0] }}'>
+        <span> {{ user[0] }} </span>
+        <span> {{ user[1] }} </span>
+        <span> {{ user[2] }} </span>
+        <span> {{ user[3] }} </span>
+        <span> {{ user[4] }}</span>
+        <span class='edit_button' title='Edit User'> &#x270e; </span>
+        <span class='delete_button' title='Delete User'> &#x232b; </span>
+    </div>
+    {% endfor %}
+    </div>
 </body>
 </html>

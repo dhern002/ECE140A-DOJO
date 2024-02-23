@@ -20,35 +20,34 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     create_account_form.addEventListener("submit", (event) => {
        event.preventDefault();
-       console.log(event.target);
-       let username = event.target.querySelector('input[type="text"]').value;
-       let password = event.target.querySelector('input[type="password"]').value;
-        let data = {'username': username, 'password': password};
-        fetch('/create-user', {
+        const data = Object.fromEntries(new FormData(event.target).entries());
+        fetch('/users', {
             method: "POST",
-            body: JSON.stringify(data)
-        }).then((response) => response.json())
-        .then((data) => {
-            console.log(data);
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
+        }).then((response) => {
+            if(response.status == 418) {
+                alert("Username or Email is already in use! (I'm a teapot!)");
+            }
         });
-       console.log(username.value);
-       console.log(password.value);
     });
 
     log_in_form.addEventListener("submit", (event) => {
         event.preventDefault();
-        console.log(event.target);
-        let username = event.target.querySelector('input[type="text"]').value;
-        let password = event.target.querySelector('input[type="password"]').value;
-        let data = {'username': username, 'password': password};
-        localStorage.setItem("WordleAuth", "hi123123123123");
+        const data = Object.fromEntries(new FormData(event.target).entries());
+        console.log(data);
         fetch('/login', {
             method: "POST",
             headers: {
-                "Authorization": localStorage.getItem("WordleAuth"),
-                "X-sent-by": "My wordle game"
+                'X-sent-by': 'My wordle game',
+                'Content-type': 'application/json'
             },
-            body: JSON.stringify({"hi": "hi"})
+            body: JSON.stringify(data)
+        }).then((response) => {
+            if(response.status == 401) {
+                event.target.reset();
+                alert("Username or password incorrect!");
+            }
         });
     });
 })
