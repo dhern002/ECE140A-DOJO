@@ -65,9 +65,10 @@ def post_login(visitor: Visitor, request: Request, response: Response, next_rout
     username = visitor.username
     password = visitor.password
 
+
     # Authenticate the user
     if login(username, password, request, response):
-        return RedirectResponse(next_route, status_code=200)
+        return RedirectResponse(next_route, status_code=200, headers={'set-cookie': response.headers.get("set-cookie")})
     else:
         response.status_code = status.HTTP_401_UNAUTHORIZED
         return RedirectResponse("/", status_code=401)
