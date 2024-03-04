@@ -76,7 +76,7 @@ def post_login(visitor: Visitor, request: Request, response: Response, next_rout
 
 @app.get('/protected')
 @logged_in
-def get_protected() -> dict:
+def get_protected(request: Request) -> dict:
     return {'message': 'Access granted'}
 
 
