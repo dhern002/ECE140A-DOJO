@@ -1,3 +1,21 @@
+fetch('https://ece140.frosty-sky-f43d.workers.dev/api/insert', {
+    method: "POST",
+    headers: {
+        "Content-type": "application/json"
+    },
+    body: JSON.stringify({
+        "auth": "A16402144",
+        "location": "Rick's office",
+        "sensorType": "pressure",
+        "value": "405",
+        "unit": "bar"
+    })
+}).then((response) => {
+    console.log(response);
+});
+
+
+
 document.addEventListener("DOMContentLoaded", (event) => {
     let create_account_form = document.querySelector('form[action="/create-account"]');
     let log_in_form = document.querySelector('form[action="/log-in"]');
